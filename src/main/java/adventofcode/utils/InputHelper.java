@@ -47,11 +47,33 @@ public class InputHelper {
         return IntStream.range(0, theInput.length());
     }
 
-    public List<List<Integer>> toListOfList(final String columnDelimiter, final String rowDelimiter) {
+    public List<List<Integer>> toListOfIntegerList(final String columnDelimiter, final String rowDelimiter) {
         return Stream.of(theInput.split(rowDelimiter))
-                .map(row -> Stream.of(row.split(columnDelimiter))
-                        .map(Integer::parseInt).collect(Collectors.toList())
-                ).collect(Collectors.toList());
+                .map(row -> _toIntegerList(row, columnDelimiter))
+                .collect(Collectors.toList());
     }
 
+    public List<List<String>> toListOfStringList(final String columnDelimiter, final String rowDelimiter) {
+        return Stream.of(theInput.split(rowDelimiter))
+                .map(row -> _toStringList(row, columnDelimiter))
+                .collect(Collectors.toList());
+    }
+
+    public List<String> toStringList(final String delimiter) {
+        return _toStringList(theInput, delimiter);
+    }
+
+    public List<Integer> toIntegerList(final String delimiter) {
+        return _toIntegerList(theInput, delimiter);
+    }
+
+    private List<Integer> _toIntegerList(final String input, final String delimiter) {
+        return Stream.of(input.split(delimiter))
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
+    }
+
+    private List<String> _toStringList(final String input, final String delimiter) {
+        return Stream.of(input.split(delimiter)).collect(Collectors.toList());
+    }
 }
