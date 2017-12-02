@@ -2,8 +2,11 @@ package adventofcode.utils;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class InputHelper {
     private final String theInput;
@@ -42,6 +45,13 @@ public class InputHelper {
 
     public IntStream intStream() {
         return IntStream.range(0, theInput.length());
+    }
+
+    public List<List<Integer>> toListOfList(final String columnDelimiter, final String rowDelimiter) {
+        return Stream.of(theInput.split(rowDelimiter))
+                .map(row -> Stream.of(row.split(columnDelimiter))
+                        .map(Integer::parseInt).collect(Collectors.toList())
+                ).collect(Collectors.toList());
     }
 
 }
