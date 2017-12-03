@@ -4,6 +4,8 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -75,5 +77,14 @@ public class InputHelper {
 
     private List<String> _toStringList(final String input, final String delimiter) {
         return Stream.of(input.split(delimiter)).collect(Collectors.toList());
+    }
+
+    public KeyValue keyValueByKey(final String keyRegex) {
+        Matcher matcher = Pattern.compile(keyRegex).matcher(theInput);
+        if (matcher.find()) {
+            return new KeyValue(theInput.substring(0, matcher.end()), theInput.substring(matcher.end()));
+        }
+
+        return null;
     }
 }
