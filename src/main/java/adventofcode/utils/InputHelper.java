@@ -87,7 +87,7 @@ public class InputHelper {
         return Stream.of(input.split(delimiter))
             .map(Integer::parseInt)
             .collect(Collectors.toList());
-    }
+    }:w
 
     private List<String> _toStringList(final String input, final String delimiter) {
         return Stream.of(input.split(delimiter)).collect(Collectors.toList());
