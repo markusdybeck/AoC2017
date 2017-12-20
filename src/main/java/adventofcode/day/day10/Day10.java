@@ -22,34 +22,33 @@ public class Day10 {
 
     private static void starOne() throws IOException {
         final List<Integer> input = Stream.of((getInput().get(0).replaceAll(" ", "").split(",")))
-                .map(Integer::parseInt)
-                .collect(Collectors.toList());
+            .map(Integer::parseInt)
+            .collect(Collectors.toList());
         final List<Integer> numbers = IntStream.range(0, 256).mapToObj(Integer::new).collect(Collectors.toList());
         hashTheList(numbers, input, 1);
         System.out.println(numbers.get(0) * numbers.get(1));
     }
 
-
     private static void starTwo() throws IOException {
         final List<Integer> input = Stream.of((getInput().get(0).split("")))
-                .map(String::chars)
-                .map(IntStream::sum)
-                .collect(Collectors.toList());
+            .map(String::chars)
+            .map(IntStream::sum)
+            .collect(Collectors.toList());
         input.addAll(Arrays.asList(17, 31, 73, 47, 23));
 
         final List<Integer> numbers = IntStream.range(0, 256).mapToObj(Integer::new).collect(Collectors.toList());
         hashTheList(numbers, input, 64);
 
-        List<String> hexs = toHex(numbers);
+        final List<String> hexs = toHex(numbers);
         System.out.println(hexs);
         System.out.println(hexs.stream().collect(Collectors.joining()));
     }
 
-    private static void hashTheList(final List<Integer> numbers, final List<Integer> lengths, final int iterations) {
+    public static void hashTheList(final List<Integer> numbers, final List<Integer> lengths, final int iterations) {
         Integer currentPosition = 0;
         Integer skipSize = 0;
         for (int i = 0; i < iterations; i++) {
-            for (Integer length : lengths) {
+            for (final Integer length : lengths) {
                 if ((currentPosition + length) > numbers.size()) {
                     final Integer rotate = (currentPosition + length) - numbers.size();
                     Collections.rotate(numbers, -rotate);
@@ -65,14 +64,13 @@ public class Day10 {
         }
     }
 
-    private static List<String> toHex(List<Integer> numbers) {
+    public static List<String> toHex(final List<Integer> numbers) {
         final List<String> hexs = new ArrayList<>();
         for (int i = 0; i < 16; i++) {
-            String theHex =
-                    numbers.subList(i * 16, (i + 1) * 16).stream()
-                            .reduce((a, b) -> a ^ b)
-                            .map(Integer::toHexString)
-                            .orElse(null);
+            String theHex = numbers.subList(i * 16, (i + 1) * 16).stream()
+                .reduce((a, b) -> a ^ b)
+                .map(Integer::toHexString)
+                .orElse(null);
 
             theHex = theHex.length() == 1 ? "0" + theHex : theHex;
             hexs.add(theHex);
